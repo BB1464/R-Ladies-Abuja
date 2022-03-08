@@ -1,2 +1,2 @@
-# This Repository Contains the Files in which I used in Teaching Data Visualization in R at R Ladies Abuja.
+This Repository Contains the Files on how to use ggplot2 package in communicating insightful visuals from data in R at R Ladies Abuja.
  
