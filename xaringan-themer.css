@@ -31,9 +31,9 @@ h1, h2, h3 {
   font-weight: normal;
   color: #342c5c;
 }
-.remark-slide-content {
+.remark-slide-content { 
   background-color: #FFFFFF;
-  font-size: 20px;
+  font-size: 15px;
   background-image: url(img/UWCSSCRBG1.svg);
   background-size: cover;
   
