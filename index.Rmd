@@ -703,7 +703,7 @@ Thanks to **Yihui Xie** for *{knitr}* and *{xaringan}* and **Garrick Aden-Buie**
 
 I will also like to thank **Thomas Lin Pedersen** for giving a great talk on plotting anything with ggplot2 and this also inspired my talk.
 
-Slides for this talk was created with the [**xaringan package**](https://github.com/yihui/xaringan).
+Slides for this talk was created with the [**xaringan package**](https://github.com/yihui/xaringan)
 ---
 class: middle, center, hide-logo, question
 background-image: url(https://upload.wikimedia.org/wikipedia/commons/3/39/Naruto_Shiki_Fujin.svg)
