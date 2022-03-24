@@ -678,9 +678,9 @@ ggsave('plot.name.png',plot = last_plot,width = 9,height = 6,units = 'cm',dpi = 
 
    * [ggplot2 website](http://ggplot2.tidyverse.org/) 
    
-   * [ggplot2 Extension Gallery](http://www.ggplot2-exts.org/) 
+   * [ggplot2 Extension Gallery](https://exts.ggplot2.tidyverse.org/gallery/) 
    
-   * [Data Visualization: A Practical Guide](https://book4you.org/book/19209707/be7fa6) This is a very good resources to learn data visualization best practices and it was written by Kieran Healy
+   * [Data Visualization: A Practical Introduction](https://book4you.org/book/5216746/8f8e9b) This is a very good resources to learn data visualization best practices and it was written by Kieran Healy
 
    * [R for Data Science](http://r4ds.had.co.nz/) online textbook by Garrett Grolemund and Hadley Wickham. One of many good R texts available, but importantly it is free and focuses on the [`tidyverse`](http://tidyverse.org/) collection of R packages which are the modern standard for data manipulation and visualization in R.
    
