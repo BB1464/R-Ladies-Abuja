@@ -63,6 +63,7 @@ knitr::include_graphics("img/pix.jpg")
 
 
 - **Github link to get the materials**: https://github.com/BB1464/R-Ladies-Abuja
+
 ---
 # Grammar of Graphics
 .pull-right[![](img/wilkinson.jpeg)]
@@ -70,17 +71,124 @@ knitr::include_graphics("img/pix.jpg")
 
 - First published in 1999
 
+- A theoretical deconstruction of data graphics
+
 - Foundation for many graphic applications
 
-- Grammar can be applied to every type of plot
+- The Grammar of Graphics can be applied to every type of plot
 
 - Concisely describe components
 
-- A theoretical deconstruction of data graphics
 
 
 .pull-left[![](img/ggplot2.png)]
 ]
+---
+# Grammar of Graphics
+![](img/tom1.png)
+---
+# Grammar of Graphics
+.pull-right[![](img/tom_data.png)]
+
+- Your dataset
+
+- Tidy format
+
+- There is no visualization without a dataset
+
+---
+# Grammar of Graphics
+.pull-right[![](img/tom_mapping.png)]
+
+- **Aesthetics mapping**: links variable in the data to graphical properties in the geometry.
+
+- We can specify the following properties within the aestetic mapping (colour, shape, alpha, fill, size).
+
+---
+# Grammar of Graphics
+.pull-right[![](img/tom_statistics.png)]
+
+- Even tidy data may need some transformation
+
+- The statistics is linked to the geometry
+
+- Transform input variables to displayed values:
+  
+  - Bins for histogram
+  
+  - Summary statistics for boxplot using `stat_boxplot()`
+  
+  - No. of observations in a category for bar chart `stat_count`
+  
+- It is implicit in many plot-types but they can be done prior to plotting.
+---
+# Grammar of Graphics
+.pull-right[![](img/tom_scales.png)]
+
+-  Scales also provide the tools that let you interpret the plot: the axes and legends.
+
+
+- Scales help us to control the mapping from data to aesthetics
+
+
+- Understanding the underpinning of scales will help us to customize our visualization
+
+- Scales are automatically generated in ggplot and can be customized
+  
+  - log scale
+  
+  - We can also specify limit within the scale
+
+
+- Scales help you interpret the plot
+  - Categories -> color
+  - Numeric -> position
+
+---
+# Grammar of Graphics
+.pull-right[![](img/tom_geometries.png)]
+
+- Geometries help us to interpret the aesthetics as graphical representation
+
+- Determines your plot type
+  - bar chart
+  - scatter
+  - box plot
+  - histogram
+  - ...
+---
+
+# Grammar of Graphics
+.pull-right[![](img/tom_facets.png)]
+
+- Divide your data into panels using one or two groups
+
+- Allows you to look at smaller subsets of data
+
+---
+# Grammar of Graphics
+.pull-right[![](img/tom_coordinates.png)]
+
+- A coordinate system, maps the position of objects onto the plane of the plot.
+
+- It is also the physical mapping of the aesthetics to the paper
+
+- Coordinate systems affect all position variables simultaneously and differ from scales in that they also change the appearance of the geometric objects.
+
+- Coordinate systems control how the axes and grid lines are drawn.
+
+---
+# Grammar of Graphics
+.pull-right[![](img/tom_theme.png)]
+
+- This controls the overall look of the plot
+
+- Spans every part of the graphic that is not linked to the data
+
+- Themes give you control over things like fonts, ticks, panel strips, and backgrounds
+---
+
+![](img/horst_ggplot.jpeg)
 ---
 # Packages Used Today
 
@@ -88,7 +196,7 @@ This workshop focuses on data visualization with  [`ggplot2`](https://ggplot2.ti
 
 --
 
-`ggplot2` is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell `ggplot2` how to map variables to `aesthetics`, what graphical primitives to use, and it takes care of the details.
+`ggplot2` is a system for creating graphics, based on The Grammar of Graphics. You provide the data, tell `ggplot2` how to map variables to `aesthetics`, what graphical primitives to use, and it takes care of the details.
 
 
 --
@@ -112,112 +220,8 @@ devtools::install_github("tidyverse/ggplot2")
 ```{r load}
 library(ggplot2)
 ```
----
-# Grammar of Graphics
-![](img/tom1.png)
----
-# Grammar of Graphics
-.pull-right[![](img/tom_data.png)]
-
-- Your dataset
-
-- Tidy format
-
-- There is no visualization without a dataset
 
 ---
-# Grammar of Graphics
-.pull-right[![](img/tom_mapping.png)]
-
-- **Aesthetics mapping** links variable in the data to graphical properties in the geometry.
-
-- We can specify the following properties within the aestetic mapping (colour, shape, alpha, fill, size).
-
----
-# Grammar of Graphics
-.pull-right[![](img/tom_statistics.png)]
-
-- Even tidy data may need some transformation
-
-- The statistics is linked to the geometry
-
-- Every geometry has a default statistics and vice versa
-
-- Transform input variables to displayed values:
-  
-  - Bins for histogram
-  
-  - Summary statistics for boxplot using `stat_boxplot()`
-  
-  - No. of observations in a category for bar chart `stat_count`
----
-# Grammar of Graphics
-.pull-right[![](img/tom_scales.png)]
-
--  Scales also provide the tools that let you interpret the plot: the axes and legends.
-
-
-- Scales help us to control the mapping from data to aesthetics
-
-
-- Understanding the underpinning of scales will help us to customize our visualization
-
-- Scales are automatically generated in ggplot and can be customized
-  - log scale
-  - We can also specify limit within the scale
-
-
-- Scales help you interpret the plot
-  - Categories -> color
-  - Numeric -> position
-
----
-# Grammar of Graphics
-.pull-right[![](img/tom_geometries.png)]
-
-- Geometries help us to interpret the aesthetics as graphical repersentation
-
-- Determines your plot type
-  - bar chart
-  - scatter
-  - boxplot
-  - histogram
-  - ...
----
-
-# Grammar of Graphics
-.pull-right[![](img/tom_facets.png)]
-
-- Divide your data into panels using one or two groups
-
-- Allows you to look at smaller subsets of data
-
----
-# Grammar of Graphics
-.pull-right[![](img/tom_coordinates.png)]
-
-- A coordinate system, maps the position of objects onto the plane of the plot.
-
-- It is also the physical mapping of the aestetics to the paper
-
-- Coordinate systems affect all position variables simultaneously and differ from scales in that they also change the appearance of the geometric objects.
-
-- Coordinate systems control how the axes and grid lines are drawn.
-
----
-# Grammar of Graphics
-.pull-right[![](img/tom_theme.png)]
-
-- This controls the overall look of the plot
-
-- Spans every part of the graphic that is not linked to the data
-
-- Themes give you control over things like fonts, ticks, panel strips, and backgrounds
----
-
-![](img/horst_ggplot.jpeg)
----
-
 - `The Data Layer` specifies the data being plotted
 .center[
 ![](img/ge_data.png)
@@ -271,7 +275,7 @@ knitr::include_graphics(path = 'img/shapes-1.png')
 apropos('^geom_')
 ```
 ---
-# Scatter Plot
+# Scatter plot
 ```{r,fig.align='center',fig.height=5,fig.width=12}
                     ggplot(data = iris,
                     mapping = aes(
@@ -301,7 +305,7 @@ ggplot(data=faithful) +
   geom_point(aes(x = eruptions, y = waiting, colour = eruptions < 3))
 ```
 ---
-# Bar Plot
+# Bar plot
 ```{r,fig.align='center',fig.height=5,fig.width=12}
                     ggplot(data = iris,
                     mapping = aes(
@@ -335,7 +339,7 @@ ggplot(data = diamonds,mapping = aes(x = reorder(color,price,FUN=mean),y=price,f
 ```
 
 ---
-# Box Plot `geom_boxplot()`
+# Box plot `geom_boxplot()`
 ```{r,fig.align='center',fig.height=5,fig.width=12}
                    ggplot(data = iris,
                     mapping = aes(
@@ -366,13 +370,13 @@ ggplot(data = economics,mapping = aes(x = date,y = uempmed))+
   stat_summary(fun = mean,geom = 'line')
 ```
 ---
-# Density Plot
+# Density plot
 ```{r,fig.height=6,fig.width=12,fig.align='center'}
 ggplot(diamonds, aes(depth, fill = cut, colour = cut)) +
   geom_density(alpha = 0.2, na.rm = TRUE)
 ```
 ---
-# Violin Plot
+# Violin plot
 ```{r,fig.height=6,fig.width=12,fig.align='center'}
 ggplot(data = iris,mapping = aes(x = Sepal.Length,y = Petal.Length,fill=Species))+geom_violin()
 ```
