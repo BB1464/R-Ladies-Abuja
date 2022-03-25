@@ -437,7 +437,7 @@ ggplot(data = mpg,mapping = aes(x=class,y=stat(100*..count../sum(..count..))))+g
 ```
 ---
 - Bar plot with error bars to show the level of uncertainty around the mean
-```{r,fig.align='center',fig.height=4,fig.width=12}
+```{r,fig.align='center',fig.height=2,fig.width=10}
                           ggplot(data=diamonds,aes(x = cut, y = price)) +
                           stat_summary(
                           geom = "bar",
