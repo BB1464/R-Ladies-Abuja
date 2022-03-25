@@ -438,21 +438,17 @@ ggplot(data = mpg,mapping = aes(x=class,y=stat(100*..count../sum(..count..))))+g
 ---
 - Bar plot with error bars to show the level of uncertainty around the mean
 ```{r,fig.align='center',fig.height=2,fig.width=10}
-                          ggplot(data=diamonds,aes(x = cut, y = price)) +
-                          stat_summary(
+  ggplot(data=diamonds,aes(x = cut, y = price)) +stat_summary(
                           geom = "bar",
                           fun = "mean",
-                          alpha = .6
-                          ) +
+                          alpha = .6)+
                           stat_summary(
                           geom = "errorbar",
                           fun.data = "mean_se",
-                          width = .2
-                          ) +
+                          width = .2)+
                          stat_summary(
                          geom = "point",
-                         fun = "mean"
-                         )
+                         fun = "mean")
 ```
 ---
 - Scatter plot showing the mean data point in red
