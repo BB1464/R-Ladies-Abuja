@@ -38,7 +38,7 @@ knitr::include_graphics("img/pix.jpg")
 - `r fontawesome::fa("twitter")`: [@OluwafemOyedele](https://twitter.com/OluwafemOyedele) `r emoji::emoji("thumbsup")`
 
 - `r fontawesome::fa('github')`:
-[https://github.com/BB1464](https://github.com/BB1464)
+[https://github.com/BB1464/R-Ladies-Abuja](https://github.com/BB1464/R-Ladies-Abuja)
 
 - `r fontawesome::fa("globe")`: [https://statisticalinference.netlify.app](https://statisticalinference.netlify.app) `r emoji::emoji("smile")`
 
