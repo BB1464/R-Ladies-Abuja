@@ -1,4 +1,4 @@
-library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics, CRAN v3.3.5
+library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graphics, CRAN v3.3.5
 
 head(iris,2)
 
