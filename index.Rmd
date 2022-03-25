@@ -65,6 +65,38 @@ knitr::include_graphics("img/pix.jpg")
 - **Github link to get the materials**: https://github.com/BB1464/R-Ladies-Abuja
 
 ---
+# Packages Used Today
+
+This workshop focuses on data visualization with  [`ggplot2`](https://ggplot2.tidyverse.org).
+
+--
+
+`ggplot2` is a system for creating graphics, based on The Grammar of Graphics. You provide the data, tell `ggplot2` how to map variables to `aesthetics`, what graphical primitives to use, and it takes care of the details.
+
+
+--
+
+You can install `ggplot2` with the following:
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
+```
+
+ Or the development version from GitHub:
+
+```{r,eval=FALSE}
+install.packages("devtools")
+```
+
+```{r,eval=FALSE}
+devtools::install_github("tidyverse/ggplot2")
+```
+
+```{r load}
+library(ggplot2)
+```
+
+---
 # Grammar of Graphics
 .pull-right[![](img/wilkinson.jpeg)]
 .pull-left[
@@ -189,38 +221,6 @@ knitr::include_graphics("img/pix.jpg")
 ---
 
 ![](img/horst_ggplot.jpeg)
----
-# Packages Used Today
-
-This workshop focuses on data visualization with  [`ggplot2`](https://ggplot2.tidyverse.org).
-
---
-
-`ggplot2` is a system for creating graphics, based on The Grammar of Graphics. You provide the data, tell `ggplot2` how to map variables to `aesthetics`, what graphical primitives to use, and it takes care of the details.
-
-
---
-
-You can install `ggplot2` with the following:
-
-```{r, eval=FALSE}
-install.packages("ggplot2")
-```
-
- Or the development version from GitHub:
-
-```{r,eval=FALSE}
-install.packages("devtools")
-```
-
-```{r,eval=FALSE}
-devtools::install_github("tidyverse/ggplot2")
-```
-
-```{r load}
-library(ggplot2)
-```
-
 ---
 - `The Data Layer` specifies the data being plotted
 .center[
