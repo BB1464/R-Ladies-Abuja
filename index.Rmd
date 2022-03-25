@@ -93,7 +93,7 @@ devtools::install_github("tidyverse/ggplot2")
 ```
 
 ```{r load}
-library(ggplot2)
+library(ggplot2) # Create Elegant Data Visualisations Using the Grammar of Graphics, CRAN v3.3.5
 ```
 
 ---
@@ -157,13 +157,11 @@ library(ggplot2)
 # Grammar of Graphics
 .pull-right[![](img/tom_scales.png)]
 
--  Scales also provide the tools that let you interpret the plot: the axes and legends.
-
-
 - Scales help us to control the mapping from data to aesthetics
 
 
-- Understanding the underpinning of scales will help us to customize our visualization
+-  Scales also provide the tools that let you interpret the plot: the axes and legends.
+
 
 - Scales are automatically generated in ggplot and can be customized
   
@@ -248,16 +246,17 @@ library(ggplot2)
 - The shape of a point as a number
 
 ---
-- `Aestetic` properties in R
+- `Aestetic` properties in R but this can be specified within the scale_* function.
 ```{r,fig.align='center',fig.width=12,fig.height=5,echo=FALSE}
 knitr::include_graphics(path = 'img/common-aesthetics-1.png')
 ```
 ---
-- Shapes that are available in R
+- Shapes that are available in R which can also be specified within the scale_* function.
 ```{r,fig.align='center',fig.width=16,fig.height=8,echo=FALSE}
 knitr::include_graphics(path = 'img/shapes-1.png')
 ```
 ---
+- Aesthetic mapping
 ```{r,fig.align='center',fig.height=6,fig.width=12}
                     ggplot(data = iris,
                     mapping = aes(
@@ -307,15 +306,11 @@ ggplot(data=faithful) +
 ---
 # Bar plot
 ```{r,fig.align='center',fig.height=5,fig.width=12}
-                    ggplot(data = iris,
-                    mapping = aes(
-                     x = Species,
-                     fill=Species)
-                      )+
-                     geom_bar(width = 0.7)
+            ggplot(data = iris)+
+  geom_bar(mapping = aes(x = Species,fill=Species),data = NULL,width = 0.7)
 ```
 ---
-# Bar plot
+# Bar plot where we fail to define the stat 
 ```{r,error=TRUE,fig.align='center',fig.height=5,fig.width=12}
                     ggplot(data = iris,
                     mapping = aes(
@@ -383,9 +378,12 @@ ggplot(data = iris,mapping = aes(x = Sepal.Length,y = Petal.Length,fill=Species)
 ---
 - `Statistics`
 
-- Statistical transformations,  summaries the data: for example, binning and counting observations to create a histogram, or fitting a linear model.
+- Statistical transformations,  summarize the data: for example, binning and counting observations to create a histogram, or fitting a linear model.
 
 - The statistics layer allows you plot statistical values calculated from the data
+
+- You’ve already used many of ggplot2’s stats because they’re used behind the scenes to generate many important `geoms`
+
 
 - The function below shows the number of statistics available in ggplot2
 ```{r}
@@ -405,6 +403,11 @@ apropos('^stat_')
                       'point',shape=23,fill='white',size=2.5)+xlab('Species')
 ```
 ---
+- stat_identity leaves the data unchanged
+```{r,fig.align='center',fig.height=6,fig.width=12}
+ggplot(data=mtcars)+stat_identity(mapping = aes(x = wt,y = mpg))
+```
+---
 - Statistical Transformation for bar plot
 ```{r,fig.align='center',fig.width=12,fig.height=5,echo=FALSE}
 knitr::include_graphics(path = 'img/visualization-stat-bar.png')
@@ -422,7 +425,12 @@ ggplot(mpg) +
   geom_bar(aes(x = class, y = after_stat(100 * count / sum(count))))
 ```
 ---
-- `after_scale` function
+- Old approach to apply aesthetics mapping after the statistics
+```{r,fig.align='center',fig.width=12,fig.height=6}
+ggplot(data = mpg,mapping = aes(x=class,y=stat(100*..count../sum(..count..))))+geom_bar()
+```
+---
+- `after_scale` function which is the new approach
 ```{r,fig.align='center',fig.width=12,fig.height=6}
    ggplot(mpg, aes(class, hwy)) +
   geom_boxplot(aes(fill = stage(class, after_scale = alpha(fill, 0.4))))
@@ -545,6 +553,11 @@ ggplot(mpg) +
                                  'gray50','pink','black'))
 ```
 ---
+- This are all linked to the scales of the visualization
+```{r,fig.align='center',fig.height=6,fig.width=12,echo=FALSE}
+knitr::include_graphics('img/scale-guides.png')
+```
+---
 `How to creat breaks in the x axis`
 ```{r,fig.align='center',fig.height=6,fig.width=12}
 ggplot(data = economics,mapping = aes(x = date,y = unemploy))+
@@ -624,14 +637,11 @@ apropos('^facet_')
                   facet_grid(drv ~ cyl)
 ```
 ---
-# Themes
-- `The Themes Layer` refers to all non-data ink:
-- Any text element can be modified with element_text()
-
-- Any line element can be modified with element_line()
-
-- Any rect element can be modified with element_rect()
-
+- We can customize the plot background with the themes below
+```{r}
+apropos('^*theme_()')
+```
+---
 ```{r}
 length(theme_get())
 theme_get() |> head(1)
@@ -642,7 +652,23 @@ theme_get() |> head(1)
 theme_get()$plot.title
 ```
 ---
-- Theming defines the feel and look of your final visualization and is something you will normally defer to the final polishing of the plot. It is very easy to change looks with a prebuild theme
+
+- We can use `theme()` if we want to tweak the display of an existing theme.
+
+- `The Themes Layer` refers to all non-data ink: i.e. titles, labels, fonts, background, gridlines, and legends.
+
+- Any text element  in the theme can be modified with element_text()
+
+- Any line element can be modified with element_line()
+
+- Any rect element can be modified with element_rect()
+
+- Theming defines the feel and look of your final visualization and is something you will normally defer to the final polishing of the plot. 
+
+---
+![](img/theme_elements.png)
+---
+`Minimal theme`
 ```{r,fig.align='center',fig.height=6,fig.width=12}
 ggplot(mpg) + 
   geom_bar(aes(y = class)) + 
@@ -650,8 +676,7 @@ ggplot(mpg) +
   theme_minimal()
 ```
 ---
-- Further adjustments can be done in the end to get exactly the look you want
-
+`Theme customization`
 ```{r,fig.align='center',fig.height=4,fig.width=12,message=FALSE,warning=FALSE}
 ggplot(mpg)+geom_bar(aes(y = class))+facet_wrap( ~ year)+
   labs(
@@ -669,8 +694,6 @@ ggplot(mpg)+geom_bar(aes(y = class))+facet_wrap( ~ year)+
     panel.ontop=TRUE
   )
 ```
----
-![](img/theme_elements.png)
 ---
 # Saving the plot
 ```{r,eval=FALSE}
@@ -694,20 +717,21 @@ ggsave('plot.name.png',plot = last_plot,width = 9,height = 6,units = 'cm',dpi = 
   
 ---
 # Acknowledgement
-Special thanks to all the people who made this tutorial a success:
+Special thanks to all the people who made this presentation successful:
 
-**@R-Ladies Abuja** organisers for giving me the opportunity to present this talk
+- I will like to thank **@R-Ladies Abuja** organisers for giving me the opportunity to present this presentation.
 
 
-Thanks to **Yihui Xie** for *{knitr}* and *{xaringan}* and **Garrick Aden-Buie** for *{xaringanthemer}*
+- I will also like to thanks **Yihui Xie** for developing the *{knitr}* and *{xaringan}* package and also **Garrick Aden-Buie** for developing the *{xaringanthemer}* package.
 
-I will also like to thank **Thomas Lin Pedersen** for giving a great talk on plotting anything with ggplot2 and this also inspired my talk.
+- I will also like to appreciate **Thomas Lin Pedersen** for giving a great talk on plotting anything with ggplot2 and this also inspired my talk.
 
-Slides for this talk was created with the [**xaringan package**](https://github.com/yihui/xaringan)
+- Slides for this talk was created with the [**xaringan package**](https://github.com/yihui/xaringan)
 ---
 class: middle, center, hide-logo, question
 background-image: url(https://upload.wikimedia.org/wikipedia/commons/3/39/Naruto_Shiki_Fujin.svg)
 background-size: contain
 
 # Questions
+
 
