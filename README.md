@@ -25,5 +25,8 @@ This repository contains the files I used in presenting how to use ggplot2 packa
 
 
 
-
+.image-center[
 ![](img/LOGO.jfif)
+]
+
+.footnote[R-Ladies Abuja]
