@@ -14,7 +14,7 @@ class: center, top, title-slide
 # Communicating Data Insights with Visuals using ggplot2
 ## Oluwafemi Oyedele
 ### Research Fellow, IITA<br>R-Ladies Abuja
-### Mar 26, 2022<br>Updated: Mar 25, 2022
+### Mar 26, 2022<br>Updated: Mar 26, 2022
 
 ---
 
@@ -74,7 +74,7 @@ This workshop focuses on data visualization with  [`ggplot2`](https://ggplot2.ti
 
 --
 
-`ggplot2` is a system for creating graphics, based on The Grammar of Graphics. You provide the data, tell `ggplot2` how to map variables to `aesthetics`, what graphical primitives to use, and it takes care of the details.
+`ggplot2` is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell `ggplot2` how to map variables to `aesthetics`, what graphical primitives to use (`geoms`), and it takes care of the details.
 
 
 --
@@ -147,10 +147,6 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
 # Grammar of Graphics
 .pull-right[![](img/tom_statistics.png)]
 
-- Even tidy data may need some transformation
-
-- The statistics is linked to the geometry
-
 - Transform input variables to displayed values:
   
   - Bins for histogram
@@ -159,6 +155,10 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
   
   - No. of observations in a category for bar chart `stat_count`
   
+- Even tidy data may need some transformation
+
+- The statistics is linked to the geometry
+
 - It is implicit in many plot-types but they can be done prior to plotting.
 ---
 # Grammar of Graphics
@@ -188,10 +188,10 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
 - Geometries help us to interpret the aesthetics as graphical representation
 
 - Determines your plot type
-  - bar chart
-  - scatter
-  - box plot
-  - histogram
+  - bar chart `geom_bar()`
+  - scatter `geom_point()`
+  - box plot `geom_boxplot()`
+  - histogram `geom_histogram()`
   - ...
 ---
 
@@ -250,25 +250,6 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
 
 &lt;img src="index_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 ---
-# Aestetic Mapping
-
-- `Aestetic Mapping`: This layer specifies how we want to map our data onto the scales of the plot
-
-- To set a geometric property manually, place it outside of `aes()`
-
-- The name of a color as a character string
-
-- The size of a point
-
-- The shape of a point as a number
-
----
-- `Aestetic` properties in R but this can be specified within the scale_* function.
-&lt;img src="img/common-aesthetics-1.png" width="1536" style="display: block; margin: auto;" /&gt;
----
-- Shapes that are available in R which can also be specified within the scale_* function.
-&lt;img src="img/shapes-1.png" width="1792" style="display: block; margin: auto;" /&gt;
----
 - Aesthetic mapping
 
 ```r
@@ -281,10 +262,10 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
                       ) 
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # Geoms
-`ggplot2` has 53 `geoms` at the moments but we are going to look at just few geoms today. But I will release some useful resources at the end where you can learn further on what is not covered here.
+`ggplot2` has 53 `geometry` at the moments but we are going to look at just few `geometry` today. But I will release some useful resources at the end where you can learn further on what is not covered here.
 - We can view all the geoms with this function below
 
 ```r
@@ -325,9 +306,22 @@ apropos('^geom_')
                      geom_point()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 ---
-- Removing the colour from the mapping
+- Variable that is not link to the data set
+
+```r
+                 ggplot(data = iris,
+       mapping = aes(
+           x = Sepal.Length,
+           y =  Sepal.Width,shape=Species,colour='blue'))+
+    geom_point()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+- Removing the color from the mapping
 
 ```r
                  ggplot(data = iris,
@@ -337,7 +331,7 @@ apropos('^geom_')
     geom_point(colour='blue')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 ---
 &lt;img src="img/tom_need1.png" width="1735" style="display: block; margin: auto;" /&gt;
 ---
@@ -347,7 +341,7 @@ ggplot(data=faithful) +
   geom_point(aes(x = eruptions, y = waiting, colour = eruptions &lt; 3))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # Bar plot
 
@@ -356,7 +350,7 @@ ggplot(data=faithful) +
   geom_bar(mapping = aes(x = Species,fill=Species),data = NULL,width = 0.7)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # Bar plot where we fail to define the stat 
 
@@ -375,6 +369,19 @@ ggplot(data=faithful) +
 ## ! stat_count() can only have an x or y aesthetic.
 ```
 
+&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+```r
+                    ggplot(data = iris,
+                    mapping = aes(
+                     x = Species,
+                     y= Sepal.Length,
+                     fill=Species)
+                      )+
+                     geom_bar(width = 0.9,stat='identity')
+```
+
 &lt;img src="index_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - This shows the proportion for each cut
@@ -390,7 +397,7 @@ ggplot(data = diamonds,mapping = aes(x = color,y=price,fill=cut))+
 
 ```r
 ggplot(data = diamonds,mapping = aes(x = reorder(color,price,FUN=mean),y=price,fill=cut))+
-  geom_bar(stat='summary',fun=mean)+xlab('Diamond quality')
+  geom_bar(stat='summary',fun=mean)+xlab('Diamond colour')
 ```
 
 &lt;img src="index_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
@@ -447,26 +454,13 @@ ggplot(data = economics,mapping = aes(x = date,y = uempmed))+
 
 &lt;img src="index_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
 ---
-# Density plot
-
-```r
-ggplot(diamonds, aes(depth, fill = cut, colour = cut)) +
-  geom_density(alpha = 0.2, na.rm = TRUE)
-```
-
-&lt;img src="index_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
----
 # Violin plot
 
 ```r
-ggplot(data = iris,mapping = aes(x = Sepal.Length,y = Petal.Length,fill=Species))+geom_violin()
+ggplot(data = iris,mapping = aes(x = Species,y = Petal.Length,fill=Species))+geom_violin()
 ```
 
-```
-## Warning: position_dodge requires non-overlapping x intervals
-```
-
-&lt;img src="index_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - `Statistics`
 
@@ -511,7 +505,7 @@ apropos('^stat_')
                       'point',shape=23,fill='white',size=2.5)+xlab('Species')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - stat_identity leaves the data unchanged
 
@@ -519,7 +513,7 @@ apropos('^stat_')
 ggplot(data=mtcars)+stat_identity(mapping = aes(x = wt,y = mpg))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - Statistical Transformation for bar plot
 &lt;img src="img/visualization-stat-bar.png" width="3867" style="display: block; margin: auto;" /&gt;
@@ -528,35 +522,7 @@ ggplot(data=mtcars)+stat_identity(mapping = aes(x = wt,y = mpg))
 
 - What it the default `stat` for `geom_bar`?
 ---
-- Values calculated by the stat is available with the `after_stat()` function 
-inside `aes()`. You can do all sorts of computations inside that.
-
-
-```r
-ggplot(mpg) + 
-  geom_bar(aes(x = class, y = after_stat(100 * count / sum(count))))
-```
-
-&lt;img src="index_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
----
-- Old approach to apply aesthetics mapping after the statistics
-
-```r
-ggplot(data = mpg,mapping = aes(x=class,y=stat(100*..count../sum(..count..))))+geom_bar()
-```
-
-&lt;img src="index_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
----
-- `after_scale` function which is the new approach
-
-```r
-   ggplot(mpg, aes(class, hwy)) +
-  geom_boxplot(aes(fill = stage(class, after_scale = alpha(fill, 0.4))))
-```
-
-&lt;img src="index_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
----
-- Bar plot with error bars to show the level of uncertainty around the mean
+- Bar plot with error bars to show the level of precision around the mean
 
 ```r
   ggplot(data=diamonds,aes(x = cut, y = price)) +stat_summary(
@@ -572,7 +538,7 @@ ggplot(data = mpg,mapping = aes(x=class,y=stat(100*..count../sum(..count..))))+g
                          fun = "mean")
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - Scatter plot showing the mean data point in red
 
@@ -582,7 +548,7 @@ ggplot(mpg)+
   stat_summary(mapping = aes(x = class,y=hwy),fun = mean,geom='point',colour='red')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - Here I added the best fit line alongside with the 95% confidence interval
 
@@ -596,7 +562,7 @@ ggplot(mpg, aes(x = cty, y = displ)) +
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 ---
 
 ```r
@@ -606,7 +572,7 @@ iris |&gt;
   stat_summary(geom = 'pointrange',fun.max = max,fun.min = min,fun = mean)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # `Scales`
 
@@ -659,7 +625,7 @@ apropos('^scale_')|&gt; head(n=50)
                    geom_point(aes(colour = class))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
 ---
  `What actually happens is this:`
 
@@ -671,7 +637,7 @@ apropos('^scale_')|&gt; head(n=50)
                     scale_colour_discrete()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
 ---
 `placing the x axis on log10`
 
@@ -681,7 +647,7 @@ apropos('^scale_')|&gt; head(n=50)
                  scale_x_log10()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /&gt;
 ---
 `Modifying the colour of the scatter plot using scale_colour_discrete`
 
@@ -691,7 +657,7 @@ apropos('^scale_')|&gt; head(n=50)
            scale_color_brewer(name='Class',palette = 'Set1')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-38-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - Here I specified that the type should be qualitative but we can also use sequencial or diverging
 
@@ -701,7 +667,7 @@ ggplot(mpg) +
   scale_colour_brewer(type = 'qual')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
 ---
 `Modifying the colour of the bar plot`
 
@@ -711,7 +677,7 @@ ggplot(mpg) +
           scale_fill_brewer(name='Species',palette = 'Dark2')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-40-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - Here I placed the y axis on log 10 and then I specified the breaks for the y axis
 
@@ -722,7 +688,7 @@ ggplot(mpg) +
   scale_y_continuous(trans = 'log10')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 `How to supply manual colour to ggplot2`
@@ -736,7 +702,7 @@ ggplot(mpg) +
                                  'gray50','pink','black'))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-38-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - This are all linked to the scales of the visualization
 &lt;img src="img/scale-guides.png" width="992" style="display: block; margin: auto;" /&gt;
@@ -749,7 +715,7 @@ ggplot(data = economics,mapping = aes(x = date,y = unemploy))+
   scale_x_date(date_breaks = '10 years')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-44-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-40-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - Supplying labels to the x axis 
 
@@ -761,39 +727,14 @@ ggplot(data = economics,mapping = aes(x = date,y = unemploy))+
       labels=c('setosa\n(N=50)','versicolor\n(N=50)','virginica\n(N=50)'))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-45-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
 ---
-- Coordinate system in `ggplot2`
+# Coordinate system in `ggplot2`
 - The coordinate system, describes how data coordinates are mapped to the plane of the graphic. It also provides axes and grid lines to help read the graph. We normally use the Cartesian coordinate system, but a number of others are available, including polar coordinates and map projections.
 
 - We can view all the available coordinate system with the function below
 
-```r
-apropos('^coord_')
-```
-
-```
-##  [1] "coord_cartesian" "coord_equal"     "coord_fixed"     "coord_flip"     
-##  [5] "coord_map"       "coord_munch"     "coord_polar"     "coord_quickmap" 
-##  [9] "coord_sf"        "coord_trans"
-```
----
-- `Pie Chart with coord_polar()`
-
-```r
-df &lt;- data.frame(Group=c('Tall','Short','Average'),Height=c(14,30,45))
-
-df |&gt;
-  dplyr::mutate(Percentage=round(prop.table(Height)*100,1)) |&gt;
-  ggplot(aes(x = '',y = Percentage,fill=Group))+
-  geom_bar(stat = 'identity',width = 1)+
-  coord_polar(theta = 'y',direction = 1)+
-  geom_text(aes(label=paste0(Percentage,'%')),position = position_stack(vjust = 0.5))+
-  theme_void()+
-  scale_fill_brewer(palette = 'Set1')
-```
-
-&lt;img src="index_files/figure-html/unnamed-chunk-47-1.png" style="display: block; margin: auto;" /&gt;
+![](img/visualization-coordinate-systems.png)
 ---
 - We can zoom into the plot within the `coord_cartesian` by just specifying the limit
 
@@ -803,7 +744,7 @@ ggplot(mpg) +
   coord_cartesian(ylim = c(0, 40))
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-48-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - We can ensure that the x and y axis start from zero
 
@@ -821,9 +762,7 @@ ggplot(mpg) +
 ## element will be used
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-49-1.png" style="display: block; margin: auto;" /&gt;
----
-![](img/visualization-coordinate-systems.png)
+&lt;img src="index_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # Facetting
 - The facet defines how data is split among panels. The default facet 
@@ -849,7 +788,7 @@ apropos('^facet_')
                 facet_wrap(~ class, nrow = 2)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-51-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-45-1.png" style="display: block; margin: auto;" /&gt;
 ---
 `facet_grid`
 
@@ -859,7 +798,7 @@ apropos('^facet_')
                   facet_grid(drv ~ cyl)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-52-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-46-1.png" style="display: block; margin: auto;" /&gt;
 ---
 - We can customize the plot background with the themes below
 
@@ -873,7 +812,6 @@ apropos('^*theme_()')
 ##  [9] "theme_minimal"  "theme_replace"  "theme_set"      "theme_test"    
 ## [13] "theme_update"   "theme_void"
 ```
----
 
 ```r
 length(theme_get())
@@ -922,7 +860,7 @@ theme_get()$plot.title
 ##  - attr(*, "class")= chr [1:2] "element_text" "element"
 ```
 ---
-
+# Theme customization
 - We can use `theme()` if we want to tweak the display of an existing theme.
 
 - `The Themes Layer` refers to all non-data ink: i.e. titles, labels, fonts, background, gridlines, and legends.
@@ -949,7 +887,7 @@ ggplot(mpg) +
   theme_minimal()
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-56-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-49-1.png" style="display: block; margin: auto;" /&gt;
 ---
 `Theme customization`
 
@@ -971,7 +909,7 @@ ggplot(mpg)+geom_bar(aes(y = class))+facet_wrap( ~ year)+
   )
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-57-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /&gt;
 ---
 # Saving the plot
 

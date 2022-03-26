@@ -71,7 +71,7 @@ This workshop focuses on data visualization with  [`ggplot2`](https://ggplot2.ti
 
 --
 
-`ggplot2` is a system for creating graphics, based on The Grammar of Graphics. You provide the data, tell `ggplot2` how to map variables to `aesthetics`, what graphical primitives to use, and it takes care of the details.
+`ggplot2` is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell `ggplot2` how to map variables to `aesthetics`, what graphical primitives to use (`geoms`), and it takes care of the details.
 
 
 --
@@ -140,10 +140,6 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
 # Grammar of Graphics
 .pull-right[![](img/tom_statistics.png)]
 
-- Even tidy data may need some transformation
-
-- The statistics is linked to the geometry
-
 - Transform input variables to displayed values:
   
   - Bins for histogram
@@ -152,6 +148,10 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
   
   - No. of observations in a category for bar chart `stat_count`
   
+- Even tidy data may need some transformation
+
+- The statistics is linked to the geometry
+
 - It is implicit in many plot-types but they can be done prior to plotting.
 ---
 # Grammar of Graphics
@@ -181,10 +181,10 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
 - Geometries help us to interpret the aesthetics as graphical representation
 
 - Determines your plot type
-  - bar chart
-  - scatter
-  - box plot
-  - histogram
+  - bar chart `geom_bar()`
+  - scatter `geom_point()`
+  - box plot `geom_boxplot()`
+  - histogram `geom_histogram()`
   - ...
 ---
 
@@ -233,29 +233,6 @@ library(ggplot2) # Create Elegant Data Visualizations Using the Grammar of Graph
                  ggplot(data = iris)
 ```
 ---
-# Aestetic Mapping
-
-- `Aestetic Mapping`: This layer specifies how we want to map our data onto the scales of the plot
-
-- To set a geometric property manually, place it outside of `aes()`
-
-- The name of a color as a character string
-
-- The size of a point
-
-- The shape of a point as a number
-
----
-- `Aestetic` properties in R but this can be specified within the scale_* function.
-```{r,fig.align='center',fig.width=12,fig.height=5,echo=FALSE}
-knitr::include_graphics(path = 'img/common-aesthetics-1.png')
-```
----
-- Shapes that are available in R which can also be specified within the scale_* function.
-```{r,fig.align='center',fig.width=16,fig.height=8,echo=FALSE}
-knitr::include_graphics(path = 'img/shapes-1.png')
-```
----
 - Aesthetic mapping
 ```{r,fig.align='center',fig.height=6,fig.width=12}
                     ggplot(data = iris,
@@ -268,7 +245,7 @@ knitr::include_graphics(path = 'img/shapes-1.png')
 ```
 ---
 # Geoms
-`ggplot2` has 53 `geoms` at the moments but we are going to look at just few geoms today. But I will release some useful resources at the end where you can learn further on what is not covered here.
+`ggplot2` has 53 `geometry` at the moments but we are going to look at just few `geometry` today. But I will release some useful resources at the end where you can learn further on what is not covered here.
 - We can view all the geoms with this function below
 ```{r}
 apropos('^geom_')
@@ -286,7 +263,17 @@ apropos('^geom_')
                      geom_point()
 ```
 ---
-- Removing the colour from the mapping
+- Variable that is not link to the data set
+```{r,fig.align='center',fig.height=5,fig.width=12}
+                 ggplot(data = iris,
+       mapping = aes(
+           x = Sepal.Length,
+           y =  Sepal.Width,shape=Species,colour='blue'))+
+    geom_point()
+```
+---
+
+- Removing the color from the mapping
 ```{r,fig.align='center',fig.height=5,fig.width=12}
                  ggplot(data = iris,
        mapping = aes(
@@ -321,6 +308,16 @@ ggplot(data=faithful) +
                      geom_bar(width = 0.9)
 ```
 ---
+```{r,error=TRUE,fig.align='center',fig.height=5,fig.width=12}
+                    ggplot(data = iris,
+                    mapping = aes(
+                     x = Species,
+                     y= Sepal.Length,
+                     fill=Species)
+                      )+
+                     geom_bar(width = 0.9,stat='identity')
+```
+---
 - This shows the proportion for each cut
 ```{r,fig.align='center',fig.height=8,fig.width=12}
 ggplot(data = diamonds,mapping = aes(x = color,y=price,fill=cut))+
@@ -330,7 +327,7 @@ ggplot(data = diamonds,mapping = aes(x = color,y=price,fill=cut))+
 - This shows the proportion of the cut
 ```{r,fig.align='center',fig.height=8,fig.width=12}
 ggplot(data = diamonds,mapping = aes(x = reorder(color,price,FUN=mean),y=price,fill=cut))+
-  geom_bar(stat='summary',fun=mean)+xlab('Diamond quality')
+  geom_bar(stat='summary',fun=mean)+xlab('Diamond colour')
 ```
 
 ---
@@ -365,15 +362,9 @@ ggplot(data = economics,mapping = aes(x = date,y = uempmed))+
   stat_summary(fun = mean,geom = 'line')
 ```
 ---
-# Density plot
-```{r,fig.height=6,fig.width=12,fig.align='center'}
-ggplot(diamonds, aes(depth, fill = cut, colour = cut)) +
-  geom_density(alpha = 0.2, na.rm = TRUE)
-```
----
 # Violin plot
 ```{r,fig.height=6,fig.width=12,fig.align='center'}
-ggplot(data = iris,mapping = aes(x = Sepal.Length,y = Petal.Length,fill=Species))+geom_violin()
+ggplot(data = iris,mapping = aes(x = Species,y = Petal.Length,fill=Species))+geom_violin()
 ```
 ---
 - `Statistics`
@@ -417,26 +408,7 @@ knitr::include_graphics(path = 'img/visualization-stat-bar.png')
 
 - What it the default `stat` for `geom_bar`?
 ---
-- Values calculated by the stat is available with the `after_stat()` function 
-inside `aes()`. You can do all sorts of computations inside that.
-
-```{r,fig.align='center',fig.width=12,fig.height=6}
-ggplot(mpg) + 
-  geom_bar(aes(x = class, y = after_stat(100 * count / sum(count))))
-```
----
-- Old approach to apply aesthetics mapping after the statistics
-```{r,fig.align='center',fig.width=12,fig.height=6}
-ggplot(data = mpg,mapping = aes(x=class,y=stat(100*..count../sum(..count..))))+geom_bar()
-```
----
-- `after_scale` function which is the new approach
-```{r,fig.align='center',fig.width=12,fig.height=6}
-   ggplot(mpg, aes(class, hwy)) +
-  geom_boxplot(aes(fill = stage(class, after_scale = alpha(fill, 0.4))))
-```
----
-- Bar plot with error bars to show the level of uncertainty around the mean
+- Bar plot with error bars to show the level of precision around the mean
 ```{r,fig.align='center',fig.height=2,fig.width=10}
   ggplot(data=diamonds,aes(x = cut, y = price)) +stat_summary(
                           geom = "bar",
@@ -570,27 +542,12 @@ ggplot(data = economics,mapping = aes(x = date,y = unemploy))+
       labels=c('setosa\n(N=50)','versicolor\n(N=50)','virginica\n(N=50)'))
 ```
 ---
-- Coordinate system in `ggplot2`
+# Coordinate system in `ggplot2`
 - The coordinate system, describes how data coordinates are mapped to the plane of the graphic. It also provides axes and grid lines to help read the graph. We normally use the Cartesian coordinate system, but a number of others are available, including polar coordinates and map projections.
 
 - We can view all the available coordinate system with the function below
-```{r}
-apropos('^coord_')
-```
----
-- `Pie Chart with coord_polar()`
-```{r, fig.align='center',fig.height=6,fig.width=12}
-df <- data.frame(Group=c('Tall','Short','Average'),Height=c(14,30,45))
 
-df |>
-  dplyr::mutate(Percentage=round(prop.table(Height)*100,1)) |>
-  ggplot(aes(x = '',y = Percentage,fill=Group))+
-  geom_bar(stat = 'identity',width = 1)+
-  coord_polar(theta = 'y',direction = 1)+
-  geom_text(aes(label=paste0(Percentage,'%')),position = position_stack(vjust = 0.5))+
-  theme_void()+
-  scale_fill_brewer(palette = 'Set1')
-```
+![](img/visualization-coordinate-systems.png)
 ---
 - We can zoom into the plot within the `coord_cartesian` by just specifying the limit
 ```{r,fig.align='center',fig.height=6,fig.width=12}
@@ -605,8 +562,6 @@ ggplot(mpg) +
   geom_bar(aes(x = class)) + 
   coord_cartesian(ylim = c(0, 40),expand=expansion(mult = 0,add = 0))
 ```
----
-![](img/visualization-coordinate-systems.png)
 ---
 # Facetting
 - The facet defines how data is split among panels. The default facet 
@@ -634,12 +589,11 @@ apropos('^facet_')
 ```
 ---
 - We can customize the plot background with the themes below
-```{r}
+```{r,fig.height=2,fig.width=8}
 apropos('^*theme_()')
-```
----
-```{r}
+
 length(theme_get())
+
 theme_get() |> head(1)
 ```
 ---
@@ -648,7 +602,7 @@ theme_get() |> head(1)
 theme_get()$plot.title
 ```
 ---
-
+# Theme customization
 - We can use `theme()` if we want to tweak the display of an existing theme.
 
 - `The Themes Layer` refers to all non-data ink: i.e. titles, labels, fonts, background, gridlines, and legends.

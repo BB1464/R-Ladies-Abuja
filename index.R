@@ -109,7 +109,7 @@ ggplot(diamonds, aes(depth, fill = cut, colour = cut)) +
 
 
 
-ggplot(data = iris,mapping = aes(x = Sepal.Length,y = Petal.Length,fill=Species))+geom_violin()
+ggplot(data = iris,mapping = aes(x = Species,y = Petal.Length,fill=Species))+geom_violin()
 
 
 
