@@ -1,6 +1,6 @@
 ---
 title: "Communicating Data Insights with Visuals using ggplot2"
-author: "Research Fellow, IITA<br>R-Ladies Abuja"
+author: "Research Fellow, IITA<br>Abuja R Users Group"
 subtitle: "Oluwafemi Oyedele"
 date: "Mar 26, 2022<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
@@ -671,7 +671,7 @@ ggsave('plot.name.png',plot = last_plot,width = 9,height = 6,units = 'cm',dpi = 
 # Acknowledgement
 Special thanks to all the people who made this presentation successful:
 
-- I will like to thank **@R-Ladies Abuja** organisers for giving me the opportunity to present this presentation.
+- I will like to thank **@Abuja R Users Group** organisers for giving me the opportunity to present this presentation.
 
 
 - I will also like to thanks **Yihui Xie** for developing the *{knitr}* and *{xaringan}* package and also **Garrick Aden-Buie** for developing the *{xaringanthemer}* package.
